@@ -1,49 +1,27 @@
-pragma solidity ^0.8;
+// SPDX-License-Identifier: MIT
+pragma solidity ^0.8.12;
 
-import "./ownable.sol";
-import "./safemath.sol";
+import "./CardMinter.sol";
 
-contract CardFactory is Ownable {
-
-  using SafeMath for uint256;
-
-  event NewCard(uint cardId, string name, uint dna);
-
-  uint dnaDigits = 16;
-  uint dnaModulus = 10 ** dnaDigits;
-  uint cooldownTime = 1 days;
-
-  struct Card {
-    string name;
-    uint dna;
-    uint32 level;
-    uint32 readyTime;
-    uint16 winCount;
-    uint16 lossCount;
-  }
-
-  Card[] public cards;
-
-  mapping (uint => address) public cardToOwner;
-  mapping (address => uint) ownerCardCount;
-
-  function _createCard(string _name, uint _dna) internal {
-    uint id = cards.push(Card(_name, _dna, 1, uint32(now + cooldownTime), 0, 0)) - 1;
-    cardToOwner[id] = msg.sender;
-    ownerCardCount[msg.sender]++;
-    NewCard(id, _name, _dna);
-  }
-
-  function _generateRandomDna(string _str) private view returns (uint) {
-    uint rand = uint(keccak256(_str));
-    return rand % dnaModulus;
-  }
-
-  function createRandomCard(string _name) public {
-    require(ownerCardCount[msg.sender] == 0);
-    uint randDna = _generateRandomDna(_name);
-    randDna = randDna - randDna % 100;
-    _createCard(_name, randDna);
-  }
-
+contract CardFactory is CardMinter {
+  constructor() CardMinter(Parameters({
+          chainCurrencyDecimals: 18,
+          presalePriceUSD: 100,
+          publicsalePriceUSD: 200,
+          maxSupply: 42,
+          maxMint: 1,
+          token: Token({
+              name: "YouNFTup",
+              symbol: "YNP",
+              ipfsURI: "https://ipfs.io/ipfs/bafkreihmkaetjsqkb2cnzdkyhvpattzpj7duuqj4kfvtx3qfcitj2didbu"
+          }),
+          priceFeed: new PriceFeedMaticUSD(),
+          periods: Periods({
+              startPresalePeriod: block.timestamp + 1,
+              endPresalePeriod: block.timestamp + 3600 * 24 * 30,
+              startPublicsalePeriod: block.timestamp + 3600 * 24 * 60,
+              endPublicsalePeriod: block.timestamp + 3600 * 24 * 90
+          }),
+          teamAddress: payable(0xB677dd9Ae9217Fbb4E3d072b9F7F68947C2a4AA6)
+      })) {}
 }
