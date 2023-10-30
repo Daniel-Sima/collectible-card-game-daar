@@ -3,15 +3,19 @@ pragma solidity ^0.8;
 
 import "./Collection.sol";
 
+import "@openzeppelin/contracts/utils/Strings.sol";
+
 contract Main {
-  uint private count;
-  mapping(uint => Collection) private collections;
+  using Strings for uint64;
+
+  int private count;
+  mapping(int => Collection) private collections;
 
   constructor() {
     count = 0;
   }
 
-  function createCollection(string calldata name, uint256 cardCount) external {
+  function createCollection(string calldata name, uint64 cardCount) external {
     collections[count++] = new Collection(name, cardCount);
   }
 }

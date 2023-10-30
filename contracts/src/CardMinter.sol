@@ -66,7 +66,7 @@ contract CardMinter {
         require(params.periods.startPublicsalePeriod > params.periods.endPresalePeriod, "Invalid timestamp: startPublicsalePeriod");
         require(params.periods.endPublicsalePeriod > params.periods.startPublicsalePeriod, "Invalid timestamp: endPlubicsalePeriod");
 
-        token = new CardToken(this, params.token.name, params.token.symbol, params.token.ipfsURI);
+        token = new CardToken(params.token.name, params.token.symbol, params.token.ipfsURI);
 
         chainTokenDecimals = params.chainCurrencyDecimals;
         presalePriceUSD = params.presalePriceUSD;
@@ -105,7 +105,7 @@ contract CardMinter {
         }
         return State.complete;
     }
-
+    
     function getMintPrice() public view returns(uint) {
         int latestPrice = priceFeed.getLatestPrice();
         uint256 ticketPriceUSD = publicsalePriceUSD;

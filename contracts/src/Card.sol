@@ -4,20 +4,16 @@ pragma solidity ^0.8.12;
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/utils/Strings.sol";
-import "./CardMinter.sol";
-
 
 contract CardToken is ERC721Enumerable, Ownable {
     using Strings for uint256;
     
     string public ipfsURI;
     string public ipfsExt = ".json";
-    CardMinter public minter;
 
-    constructor(CardMinter _minter, string memory _name, string memory _symbol, string memory _ipfsURI) ERC721(_name, _symbol) {
+    constructor(string memory _name, string memory _symbol, string memory _ipfsURI) ERC721(_name, _symbol) {
         require(bytes(_ipfsURI).length > 0, "No IPFS URI provided");
         ipfsURI = _ipfsURI;
-        minter = _minter;
     }
 
     function tokenURI(uint256 tokenId) public view virtual override returns (string memory) {

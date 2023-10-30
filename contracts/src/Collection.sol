@@ -2,18 +2,21 @@
 pragma solidity ^0.8;
 
 import './Card.sol';
+import "@openzeppelin/contracts/utils/Strings.sol";
 
 contract Collection {
-  string public name;
-  uint256 public cardCount;
-  CardToken[] public cards;
+  using Strings for uint64;
 
-  constructor(string memory _name, uint256 _cardCount) {
+  string public name;
+  uint64 public cardCount;
+  CardToken[] private cards;
+
+  constructor(string memory _name, uint64 _cardCount) {
     name = _name;
     cardCount = _cardCount;
   }
 
-  function addToCollection(CardToken card) public {
+  function addCard(CardToken card) public {
     cards[cardCount++] = card;
   }
 }

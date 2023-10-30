@@ -15,6 +15,11 @@ const config: HardhatUserConfig = {
     deploy: './deploy',
     sources: './src',
   },
+  networks: {
+    hardhat: {
+      chainId: 1337
+    },
+  },
   namedAccounts: {
     deployer: { default: 0 },
     admin: { default: 0 },
