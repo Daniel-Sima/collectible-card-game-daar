@@ -23,5 +23,5 @@
       "$/*": ["../typechain/*"]
     }
   },
-  "include": ["./test", "./src"]
+  "include": ["./test", "./src", "components/Home.tsx", "components/WalletBalance.jsx"]
 }

@@ -2,7 +2,10 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import styles from './styles.module.css'
 import * as ethereum from '@/lib/ethereum'
 import * as main from '@/lib/main'
-import { Contract } from 'ethers'
+import { Contract, ethers } from 'ethers'
+
+import Home from 'components/Home'
+import Install from 'components/Install'
 
 type Canceler = () => void
 const useAffect = (
@@ -42,8 +45,13 @@ const useWallet = () => {
 
 export const App = () => {
   const wallet = useWallet()
-  var accountAddress = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266";
-  
+
+  // if(window.ethereum){
+  //   <Home />
+  // } else {
+  //   <Install />
+  // }
+
   return (
     <div className={styles.body}>
       <h1>Welcome to Pokémon TCG</h1>
