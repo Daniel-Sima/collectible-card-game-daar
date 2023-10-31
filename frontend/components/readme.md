@@ -1,1 +1,0 @@
-J'ai ajouté ces fichiers pour qu'on puisse decider dans App.tsx soit on lance le main programme Home soit on demande au clinet d'installer metamask

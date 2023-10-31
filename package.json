@@ -1,19 +1,45 @@
 {
-  "name": "collectible-card-game-daar",
-  "version": "1.0.0",
-  "main": "index.js",
-  "repository": "git@github.com:ghivert/touche-coule.git",
-  "author": "Guillaume Hivert <hivert.is.coming@gmail.com>",
-  "license": "MIT",
+  "name": "cards2",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
   "scripts": {
-    "postinstall": "yarn --cwd contracts install && yarn --cwd frontend install",
-    "dev": "concurrently -c \"blue.bold,red.bold\" --names \"ethereum,frontend\" \"yarn --cwd contracts dev\" \"yarn --cwd frontend dev\""
-  },
-  "devDependencies": {
-    "concurrently": "^7.5.0"
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint . --ext js,jsx --report-unused-disable-directives --max-warnings 0",
+    "preview": "vite preview"
   },
   "dependencies": {
-    "@chainlink/contracts": "^0.5.1",
-    "hardhat": "^2.18.2"
+    "pokemontcgsdk": "^2.0.0",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "react-router-dom": "^6.18.0"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-chai-matchers": "^2.0.2",
+    "@nomicfoundation/hardhat-ethers": "^3.0.4",
+    "@nomicfoundation/hardhat-network-helpers": "^1.0.9",
+    "@nomicfoundation/hardhat-toolbox": "^3.0.0",
+    "@nomicfoundation/hardhat-verify": "^1.1.1",
+    "@nomiclabs/hardhat-ethers": "^2.2.3",
+    "@nomiclabs/hardhat-waffle": "^2.0.6",
+    "@openzeppelin/contracts": "^5.0.0",
+    "@typechain/ethers-v6": "^0.4.3",
+    "@typechain/hardhat": "^8.0.3",
+    "@types/react": "^18.2.15",
+    "@types/react-dom": "^18.2.7",
+    "@vitejs/plugin-react": "^4.0.3",
+    "chai": "^4.3.10",
+    "eslint": "^8.45.0",
+    "eslint-plugin-react": "^7.32.2",
+    "eslint-plugin-react-hooks": "^4.6.0",
+    "eslint-plugin-react-refresh": "^0.4.3",
+    "ethereum-waffle": "^4.0.10",
+    "ethers": "^6.8.0",
+    "hardhat": "^2.18.3",
+    "hardhat-gas-reporter": "^1.0.9",
+    "solidity-coverage": "^0.8.5",
+    "typechain": "^8.3.2",
+    "vite": "^4.4.5"
   }
 }
