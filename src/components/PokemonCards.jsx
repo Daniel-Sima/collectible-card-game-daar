@@ -1,4 +1,3 @@
-import React, { useEffect, useState } from "react";
 import pokemon from "pokemontcgsdk";
 
 import PokemonCard from "./PokemonCard";

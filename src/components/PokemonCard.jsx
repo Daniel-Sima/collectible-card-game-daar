@@ -1,5 +1,4 @@
 import React from "react";
-import { useState, useEffect } from "react";
 import pokemon from "pokemontcgsdk";
 import { useLocation } from "react-router-dom";
 
@@ -18,11 +17,19 @@ const PokemonCard = (props) => {
             props.mintCardNFT(props.card.id, props.card.number)
           }
         >
-          <img src={props.card.images.small} className="card" />
+          <img
+            src={props.card.images.small}
+            className="card"
+            alt="Pokemon card"
+          />
         </div>
       ) : (
         <div className="cardGrey">
-          <img src={props.card.images.small} className="card-not-buyable" />
+          <img
+            src={props.card.images.small}
+            className="card-not-buyable"
+            alt="Pokemon card"
+          />
         </div>
       )}
     </>
