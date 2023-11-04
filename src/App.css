@@ -1,11 +1,192 @@
-#root {
-  /* max-width: 1280px; */
-  margin: 0 auto;
+/**************************************************************************************************/
+/*************************************** HEADER ***************************************************/
+/**************************************************************************************************/
+header {
   padding: 2rem;
-  text-align: center;
+  background-color: #011627;
+  display: flex;
+  align-items: center;
+}
+
+header svg {
+  font-size: 4rem;
+  cursor: pointer;
+}
+
+header svg:hover {
+  color: #99a2a9;
+}
+
+.logo--TCG {
+  width: 15rem;
+}
+
+.centre--helper {
+  margin: 0 auto;
+}
+
+/**************************************************************************************************/
+/*************************************** SIDE BAR *************************************************/
+/**************************************************************************************************/
+.sidebar {
+  width: 24rem;
+  background-color: #011627;
+  position: absolute;
+  height: 86vh;
+  padding: 0 3rem;
+  transition: all 1s;
+  left: -100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.sidebar.active {
+  left: 0;
+}
+
+.sidebar span {
+  font-family: "Ultra";
+  font-size: 2.1rem;
+}
+
+ul li {
+  list-style-type: none;
+  margin: 2.5rem 0;
+  /* font-weight: 800; */
+}
+
+ul li a {
+  color: #eaecef;
+  text-decoration: none;
+  font-size: 1.6rem;
+  padding: 1rem 1.5rem;
+  border-radius: 6px;
+  display: block;
+}
+
+ul li a:hover,
+ul li a:active {
+  background: #172b4b;
 }
 
 .logo {
+  margin-top: 2.5rem;
+  width: 5rem;
+}
+
+picture {
+  display: flex;
+  justify-content: center;
+}
+
+.tab {
+  font-size: 24px;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.sideBar-address {
+  font-size: 9px;
+}
+
+/**************************************************************************************************/
+/****************************************** GENERAL ***********************************************/
+/**************************************************************************************************/
+.start-text {
+  display: flex;
+  justify-content: center;
+  margin: 2rem 0;
+  font-size: 3rem;
+  font-family: "Ultra";
+}
+
+.border-top {
+  border-top: 5px solid currentColor;
+  border-top-left-radius: 500%; /* Rayon du coin supérieur gauche */
+  border-top-right-radius: 500%; /* Rayon du coin supérieur droit */
+  width: 125rem;
+  margin: 0 auto;
+  margin-bottom: 3rem;
+}
+
+.margin-left--helper {
+  margin-left: -2rem;
+}
+
+.margin-bottom--helper {
+  margin-bottom: 2rem;
+}
+
+.main {
+  font-size: 2rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 90vh;
+}
+
+/**************************************************************************************************/
+/*************************************** INSTALL PAGE *********************************************/
+/**************************************************************************************************/
+.install {
+  height: 80vh;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  justify-content: center;
+  align-items: center;
+  font-size: 2rem;
+}
+
+/**************************************************************************************************/
+/***************************************** ACCOUNT ************************************************/
+/**************************************************************************************************/
+.account--cards {
+  font-size: 2rem;
+  margin-bottom: 2rem;
+}
+
+.cards {
+  margin-bottom: 2rem;
+}
+
+/**************************************************************************************************/
+/***************************************** STORE **************************************************/
+/**************************************************************************************************/
+.card:hover {
+  transform: scale(1.1);
+  transition: all 0.4s;
+}
+
+.card-not-buyable {
+  transform: scale(0.93);
+}
+
+.grid {
+  margin-left: 5rem;
+  /* margin-left: 25rem; */
+  display: grid;
+  grid-template-columns: repeat(5, 1fr); /* == 1fr 1fr 1fr 1fr 1fr */
+  gap: 5rem;
+}
+
+.container {
+  max-width: 145rem;
+  margin: 0 auto;
+  padding: 0 3.2rem;
+}
+
+.pokemonCard {
+  cursor: pointer;
+}
+
+.cardGrey {
+  filter: grayscale(100%);
+  transform: scale(1.1);
+}
+
+/* .logo {
   height: 6em;
   padding: 1.5em;
   will-change: filter;
@@ -18,29 +199,7 @@
   filter: drop-shadow(0 0 2em #61dafbaa);
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
-}
-
-.card {
-  padding: 2em;
-}
-
-.card:hover {
-  transform: scale(1.1);
-  transition: all 0.4s;
-}
 
 .read-the-docs {
   color: #888;
@@ -60,7 +219,4 @@
   filter: drop-shadow(0 0 2em #646cffaa);
 }
 
-.pokemons-presentation {
-  display: flex;
-  gap: 35rem;
-}
+*/

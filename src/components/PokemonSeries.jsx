@@ -1,3 +1,4 @@
+import React from "react";
 import pokemon from "pokemontcgsdk";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";

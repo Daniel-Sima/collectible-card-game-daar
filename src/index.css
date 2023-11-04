@@ -1,34 +1,88 @@
-:root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  line-height: 1.5;
-  font-weight: 400;
+/**************************************************************************************************/
+/**************************************************************************************************/
+/**************************************************************************************************/
+/*
+--- 01 TYPOGRAPHY SYSTEM
+- FONT SIZE SYSTEM (px)
+10 / 12 / 14 / 16 / 18 / 20 / 24 / 30 / 36 / 44 / 52 / 62 / 74 / 86 / 98
 
-  color-scheme: light dark;
-  color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+- Font weights:
+Default: 400
+Medium: 500
+Semi-bold: 600
+Bold: 700
 
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  -webkit-text-size-adjust: 100%;
+- Line heights:
+
+
+- Letter spacing:
+
+
+--- 02 COLORS
+
+Primary: #011627
+
+- Tints:
+#172b4b
+#1a2d3d
+#99a2a9
+- Shades: 
+
+- Accents:
+- Greys: 
+
+--- 05 SHADOWS
+
+
+--- 06 BORDER-RADIUS
+
+--- 07 WHITESPACE
+
+- SPACING SYSTEM (px)
+2 / 4 / 8 / 12 / 16 / 24 / 32 / 48 / 64 / 80 / 96 / 128
+*/
+
+/**************************************************************************************************/
+/**************************************************************************************************/
+/**************************************************************************************************/
+@import url("https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,400;0,500;0,700;1,400&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Erica+One&family=Roboto:ital,wght@0,400;0,500;0,700;1,400&family=Ultra&display=swap");
+
+* {
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
 }
 
-a {
+html {
+  /* Percentage of user's browser font-size setting (10px / 16px = 0.625) */
+  font-size: 62.5%;
+  overflow-x: hidden; /* cacher tous les elements qui debordent sur x*/
+  scroll-behavior: smooth; /* fonctionne que sur chrome et firefox (pas sur safari et edge)*/
+}
+
+body {
+  font-family: "Roboto", sans-serif;
+  line-height: 1;
+  font-weight: 500;
+  overflow-x: hidden; /* cacher tous les elements qui debordent sur x*/
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #1a2d3d;
+}
+
+/**************************************************************************************************/
+/**************************************************************************************************/
+/**************************************************************************************************/
+
+/* a {
   font-weight: 500;
   color: #646cff;
   text-decoration: inherit;
 }
+
 a:hover {
   color: #535bf2;
-}
-
-body {
-  margin: 0;
-  /* display: flex; */
-  /* place-items: center; */
-  /* min-width: 320px; */
-  /* min-height: 100vh; */
 }
 
 h1 {
@@ -53,17 +107,4 @@ button:hover {
 button:focus,
 button:focus-visible {
   outline: 4px auto -webkit-focus-ring-color;
-}
-
-@media (prefers-color-scheme: light) {
-  :root {
-    color: #213547;
-    background-color: #ffffff;
-  }
-  a:hover {
-    color: #747bff;
-  }
-  button {
-    background-color: #f9f9f9;
-  }
-}
+} */

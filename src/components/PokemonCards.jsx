@@ -1,30 +1,42 @@
-import { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import pokemon from "pokemontcgsdk";
 
-import WalletBalance from "./WalletBalance";
 import PokemonCard from "./PokemonCard";
 
 pokemon.configure({ apiKey: "f4be0dd2-ff36-42c2-9a1e-c50c11a36b4d" });
 
-function PokemonCards() {
-  const [pokemonCards, setPokemonCards] = useState(null);
-
-  useEffect(() => {
-    pokemon.card.all({ q: "set.id:base1" }).then((cards) => {
-      setPokemonCards(cards);
-    });
-  }, []);
+const PokemonCards = ({ mintCardNFT, pokemonCards, allCards }) => {
+  let buyable = true;
 
   return (
     <>
-      <div className="pokemons-presentation">
-        <WalletBalance />
-        <h1>Pokemons</h1>
+      <div className="pokemonCards">
+        <div className="grid container">
+          {pokemonCards &&
+            pokemonCards.map((item) => {
+              let tabNames = allCards && allCards.map((elem) => elem.name);
+
+              if (allCards && tabNames.includes(item.id)) {
+                buyable = false;
+              } else {
+                buyable = true;
+              }
+              return (
+                <div key={item.id}>
+                  {
+                    <PokemonCard
+                      card={item}
+                      mintCardNFT={mintCardNFT}
+                      buyable={buyable}
+                    />
+                  }
+                </div>
+              );
+            })}
+        </div>
       </div>
-      {pokemonCards &&
-        pokemonCards.map((item) => <PokemonCard key={item.id} card={item} />)}
     </>
   );
-}
+};
 
 export default PokemonCards;
