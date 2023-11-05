@@ -34,7 +34,7 @@ header svg:hover {
   position: absolute;
   height: 86vh;
   padding: 0 3rem;
-  transition: all 1s;
+  transition: all 0.5s;
   left: -100%;
   display: flex;
   flex-direction: column;
@@ -118,12 +118,8 @@ picture {
   margin-bottom: 2rem;
 }
 
-.main {
-  font-size: 2rem;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 90vh;
+.margin-top--helper {
+  margin-top: 3rem;
 }
 
 /**************************************************************************************************/
@@ -175,6 +171,7 @@ picture {
   max-width: 145rem;
   margin: 0 auto;
   padding: 0 3.2rem;
+  height: 75vh;
 }
 
 .pokemonCard {
@@ -184,6 +181,85 @@ picture {
 .cardGrey {
   filter: grayscale(100%);
   transform: scale(1.1);
+}
+
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 80vh;
+  font-size: 2.5rem;
+  font-family: "Ultra";
+}
+
+/**************************************************************************************************/
+/***************************************** BOOSTERS ***********************************************/
+/**************************************************************************************************/
+
+.boosters {
+  position: relative;
+}
+
+.logo--collection {
+  width: 40rem;
+  padding: 5rem;
+}
+
+.logo--collection:hover {
+  cursor: pointer;
+  filter: drop-shadow(0 0 2em #ffe066);
+}
+
+.collections {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.collection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 3rem;
+  font-family: "Ultra";
+}
+
+.pokemon-cards-container {
+  position: absolute;
+  top: 60%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  padding: 1rem;
+}
+
+.animated {
+  animation: descend 3s ease-in-out;
+}
+
+@keyframes descend {
+  from {
+    transform: translate(-50%, -100%);
+    opacity: 0;
+  }
+  to {
+    transform: translate(-50%, -50%);
+    opacity: 1;
+  }
+}
+
+/* A CHANGER */
+.btn--OK {
+  position: absolute;
+  /* top: 60%; */
+  /* left: 50%; */
+  /* transform: translate(-100%, 100%); */
+  padding: 1rem 2rem;
+  margin-top: -30rem;
+  margin-left: 55rem;
+}
+
+.btn--OK:hover,
+.btn--OK:active {
+  cursor: pointer;
 }
 
 /* .logo {

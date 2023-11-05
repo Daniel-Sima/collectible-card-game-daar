@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import pokemon from "pokemontcgsdk";
 import { useLocation } from "react-router-dom";
 
@@ -9,11 +9,19 @@ const PokemonCard = (props) => {
 
   return (
     <>
-      {props.buyable ? (
+      {location.pathname === "/Boosters" ? (
+        <div>
+          <img
+            src={props.card.images.small}
+            className="card"
+            alt="Pokemon card"
+          />
+        </div>
+      ) : props.buyable ? (
         <div
           className="pokemonCard"
           onClick={() =>
-            location.pathname !== "/Account" &&
+            location.pathname === "/Store" &&
             props.mintCardNFT(props.card.id, props.card.number)
           }
         >

@@ -3,8 +3,13 @@ pragma solidity 0.8.19;
 
 import "./../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "./../node_modules/@openzeppelin/contracts/access/Ownable.sol";
+import "./../node_modules/@openzeppelin/contracts/utils/Strings.sol";
 
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
 contract CardToken is ERC721, Ownable {
+
     uint256 COUNTER;
  
     uint256 fee = 1 ether;
@@ -13,7 +18,6 @@ contract CardToken is ERC721, Ownable {
         string name;
         uint256 id;
         uint256 cardNum; 
-        // string url; // AR
     }
 
     Card[] public cards;
@@ -49,7 +53,7 @@ contract CardToken is ERC721, Ownable {
 
     function mintRandomCard(uint256 _collectionCardCount) public {
         uint256 cardNum = _createRandomNum(_collectionCardCount);
-        _mintCardToken("to_change", cardNum); // verifier aussi si elle n'est pas deja mint
+        _mintCardToken("to_change", cardNum); 
     }
 
     function updateFee(uint256 _fee) external onlyOwner() {
@@ -72,4 +76,80 @@ contract CardToken is ERC721, Ownable {
         }
         return res;
     }
+
+    /******************************************************************************************************/
+    /**
+     * Allows the user to open a booster and win 5 cards randomly 
+     * 
+     * @param _collection   name of the collection
+     * @param _size         size of the collection
+     */
+    function openBooster(string memory _collection, uint256 _size) public payable {
+        Card[] memory res = new Card[](4);
+        uint feeToPay = 0; 
+        if (keccak256(abi.encodePacked(_collection)) == keccak256(abi.encodePacked("base5"))) {
+            feeToPay = 5 ether;
+        } else if (keccak256(abi.encodePacked(_collection)) == keccak256(abi.encodePacked("pgo"))) {
+            feeToPay = 10 ether;
+        } else if (keccak256(abi.encodePacked(_collection)) == keccak256(abi.encodePacked("dp1"))) {
+            feeToPay = 25 ether;
+        } else {
+            feeToPay = 50 ether;
+        } 
+        
+        require(msg.value >= feeToPay, "The amount is not correct!");
+
+        for (uint256 i=0; i<4; i++) {
+            uint256 randomNum = _createRandomNum(_size-i);
+            string memory randomNumString = Strings.toString(randomNum);
+            string memory concat = string.concat(_collection, "-");
+            string memory name = string.concat(concat, randomNumString);
+            while (isNameInCards(name)) {
+                randomNum = _createRandomNum(_size-i);
+                randomNumString = Strings.toString(randomNum);
+                concat = string.concat(_collection, "-");
+                name = string.concat(concat, randomNumString);
+            }
+            _mintCardToken(name, randomNum);
+            res[i] = cards[COUNTER-1];
+        }
+    }
+
+    /******************************************************************************************************/
+    /**
+     * Getter of cards that the owner has won
+     * 
+     * @param _owner Owner address
+     */
+    // function getOpenBoosterCards(address _owner) public view returns (Card[] memory) {
+    //     Card[] memory res = new Card[](5);
+    //     uint256 cpt = 0;
+    //     for(uint256 i=0; i<2; i++) {
+    //         if (ownerOf(COUNTER-i) == _owner) {
+    //             res[cpt] = cards[i];
+    //             cpt++;
+    //         } else { 
+    //             return new Card[](5); // if there is a concurrent open
+    //         }
+    //     }
+    //     return res;
+    // }
+
+    /******************************************************************************************************/
+    /**
+     * Contains method.
+     * 
+     * @param _id Name (id in Pokemon API)
+     */
+    function isNameInCards(string memory _id) public view returns (bool) {
+        for (uint i = 0; i < cards.length; i++) {
+            if (keccak256(abi.encodePacked(cards[i].name)) == keccak256(abi.encodePacked(_id))) {
+                return true; 
+            }
+        }
+        return false; 
+    }
 }
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/

@@ -13,17 +13,20 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import SideBar from "./components/SideBar";
 import logo_TCG from "./assets/pokemon_TCG.png";
 
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
 function App() {
   const [showNav, setShowNav] = useState(false);
   const [account, setAccount] = useState(null); // Vous devez gérer l'état du compte
   const [ownerCards, setOwnerCards] = useState();
 
-  // const [cardToken, setCardToken] = useState();
   const [allCards, setAllCards] = useState(null);
   const [state, setState] = useState(false);
+  const [opened, setOpened] = useState(false);
 
   const web3 = new Web3(window.ethereum);
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0x9A676e781A523b5d0C0e43731313A708CB607508";
 
   useEffect(() => {
     console.log("PONG");
@@ -80,8 +83,8 @@ function App() {
         const accounts = await web3.eth.getAccounts();
         const acc = accounts[0];
         setAccount(acc);
-        const ownerCards = await contract.getOwnerCards(acc);
-        const cardArray = ownerCards.map((item) => {
+        const ownerCardss = await contract.getOwnerCards(acc);
+        const cardArray = ownerCardss.map((item) => {
           return {
             name: item.name,
             id: parseInt(item.id),
@@ -89,6 +92,7 @@ function App() {
           };
         });
         setOwnerCards(cardArray);
+        console.log("=> ownerCardss: ", cardArray);
 
         const cards = await contract.getCardTokens();
         const cardArray2 = cards.map((item) => {
@@ -98,7 +102,6 @@ function App() {
             cardNum: parseInt(item.id),
           };
         });
-        console.log("=> allCards: ", cardArray2);
         setAllCards(cardArray2);
       }
     } catch (error) {
@@ -141,6 +144,34 @@ function App() {
     }
   }
 
+  /******************************************************************************************************/
+  /**
+   * Open a Booster collection to retrieve 5 cards.
+   *
+   * @param {*} _collection Collection name
+   * @param {*} _size       Size of the collection
+   * @param {*} _eths       Price in ETH to open
+   * @returns
+   */
+  async function openBooster(_collection, _size, _eths) {
+    console.log("OPENNNNNNNNNNNNNNNNNNNNNNNNNNNN");
+    const web3 = new Web3(window.ethereum);
+    const acc = await web3.eth.getAccounts();
+    const from = acc[0];
+    const contract = new web3.eth.Contract(CardToken.abi, contractAddress);
+    try {
+      const result = await contract.methods
+        .openBooster(_collection, _size)
+        .send({ from: from, value: ethers.parseEther("5") });
+      console.log(result);
+      setState(!state);
+      setOpened(true);
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
+  /******************************************************************************************************/
   return (
     <Router>
       <header>
@@ -169,7 +200,18 @@ function App() {
           exact={true}
           element={<Account account={account} ownerCards={ownerCards} />}
         /> */}
-        <Route path="/Boosters" exact={true} element={<Boosters />} />
+        <Route
+          path="/Boosters"
+          exact={true}
+          element={
+            <Boosters
+              openBooster={openBooster}
+              ownerCards={ownerCards}
+              opened={opened}
+              setOpened={setOpened}
+            />
+          }
+        />
         <Route
           path="/Store"
           exact={true}
@@ -182,3 +224,6 @@ function App() {
 }
 
 export default App;
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/

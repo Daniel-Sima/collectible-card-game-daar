@@ -479,8 +479,8 @@
       ]
     },
     "/home/s-daniiel/Documents/collectible-card-game-daar/contracts/CardToken.sol": {
-      "lastModificationDate": 1699128927762,
-      "contentHash": "2bc9ac074af7e2aa4fb85b6ea260dcb0",
+      "lastModificationDate": 1699156692053,
+      "contentHash": "f89bbbb89a020a8f523f15816dbb72cc",
       "sourceName": "contracts/CardToken.sol",
       "solcConfig": {
         "version": "0.8.19",
@@ -507,7 +507,8 @@
       },
       "imports": [
         "./../node_modules/@openzeppelin/contracts/token/ERC721/ERC721.sol",
-        "./../node_modules/@openzeppelin/contracts/access/Ownable.sol"
+        "./../node_modules/@openzeppelin/contracts/access/Ownable.sol",
+        "./../node_modules/@openzeppelin/contracts/utils/Strings.sol"
       ],
       "versionPragmas": [
         "0.8.19"

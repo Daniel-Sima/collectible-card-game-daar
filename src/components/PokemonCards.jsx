@@ -1,11 +1,13 @@
 import pokemon from "pokemontcgsdk";
 
 import PokemonCard from "./PokemonCard";
+import { useLocation } from "react-router-dom";
 
 pokemon.configure({ apiKey: "f4be0dd2-ff36-42c2-9a1e-c50c11a36b4d" });
 
 const PokemonCards = ({ mintCardNFT, pokemonCards, allCards }) => {
   let buyable = true;
+  const location = useLocation();
 
   return (
     <>
@@ -13,13 +15,15 @@ const PokemonCards = ({ mintCardNFT, pokemonCards, allCards }) => {
         <div className="grid container">
           {pokemonCards &&
             pokemonCards.map((item) => {
-              let tabNames = allCards && allCards.map((elem) => elem.name);
-
-              if (allCards && tabNames.includes(item.id)) {
-                buyable = false;
-              } else {
-                buyable = true;
+              if (location.pathname === "/Store") {
+                let tabNames = allCards && allCards.map((elem) => elem.name);
+                if (allCards && tabNames.includes(item.id)) {
+                  buyable = false;
+                } else {
+                  buyable = true;
+                }
               }
+
               return (
                 <div key={item.id}>
                   {
