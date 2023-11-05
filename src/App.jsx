@@ -20,16 +20,18 @@ function App() {
   const [showNav, setShowNav] = useState(false);
   const [account, setAccount] = useState(null); // Vous devez gérer l'état du compte
   const [ownerCards, setOwnerCards] = useState();
+  const [cardOnSale, setCardOnSale] = useState([]);
 
   const [allCards, setAllCards] = useState(null);
   const [state, setState] = useState(false);
   const [opened, setOpened] = useState(false);
 
   const web3 = new Web3(window.ethereum);
-  const contractAddress = "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e";
+  const contractAddress = "0x9E545E3C0baAB3E08CdfD552C960A1050f373042";
 
   useEffect(() => {
     getOwnerCards();
+    get_cards_on_sale();
 
     if (window.ethereum) {
       const handleAccountsChanged = (accounts) => {
@@ -47,23 +49,6 @@ function App() {
       };
     }
   }, [state]);
-
-  // const getAccount = async () => {
-  //   if (window.ethereum) {
-  //     try {
-  //       await window.ethereum.request({ method: "eth_requestAccounts" });
-  //       const account = await web3.eth.getAccounts();
-  //       const from = account[0];
-  //       setAccount(from);
-  //     } catch (err) {
-  //       console.error("Failed to connect to MetaMask:", err);
-  //       return false;
-  //     }
-  //   } else {
-  //     console.error("MetaMask not found");
-  //     return false;
-  //   }
-  // };
 
   /**
    * Returns owner's cards from the blockchain.
@@ -90,6 +75,7 @@ function App() {
             name: item.name,
             id: parseInt(item.id),
             cardNum: parseInt(item.id),
+            amount: parseInt(item.amount),
           };
         });
         setOwnerCards(cardArray);
@@ -101,6 +87,7 @@ function App() {
             name: item.name,
             id: parseInt(item.id),
             cardNum: parseInt(item.id),
+            amount: parseInt(item.amount),
           };
         });
         setAllCards(cardArray2);
@@ -109,25 +96,6 @@ function App() {
       console.error("Function error: ", error);
     }
   };
-
-  // /**
-  //  * Returns all cards present in the blockchain.
-  //  */
-  // const getAllCards = async () => {
-  //   const provider = new ethers.BrowserProvider(window.ethereum);
-  //   // get the end user
-  //   // const signer = provider.getSigner();
-  //   // get the smart contract
-  //   const contract = new ethers.Contract(
-  //     contractAddress,
-  //     CardToken.abi,
-  //     provider
-  //   );
-  //   try {
-  //   } catch (error) {
-  //     console.error("Erreur lors de l'appel à la fonction :", error);
-  //   }
-  // };
 
   async function mintCardNFT(_cardName, _cardNum) {
     const web3 = new Web3(window.ethereum);
@@ -173,6 +141,108 @@ function App() {
   }
 
   /******************************************************************************************************/
+  /**
+   * Put card on sale
+   *
+   * @param {*} _id     Name (id) of the card
+   * @param {*} _amount Price to sell
+   */
+  async function put_card_on_sale(_id, _images, _amount) {
+    const web3 = new Web3(window.ethereum);
+    const contract = new web3.eth.Contract(CardToken.abi, contractAddress);
+    const acc = await web3.eth.getAccounts();
+    const from = acc[0];
+    try {
+      const result = await contract.methods
+        .putCardOnSale(_id, _images, _amount)
+        .send({ from: from });
+      console.log(result);
+      get_cards_on_sale();
+    } catch (error) {
+      console.error("Function error: ", error);
+    }
+  }
+
+  /******************************************************************************************************/
+  /**
+   * Reemoves the card of the market
+   *
+   * @param {*} _counter  COUNTER of the card
+   */
+  async function remove_card_on_sale(_counter) {
+    const web3 = new Web3(window.ethereum);
+    const contract = new web3.eth.Contract(CardToken.abi, contractAddress);
+    const acc = await web3.eth.getAccounts();
+    const from = acc[0];
+    try {
+      const result = await contract.methods
+        .noLongerSell(_counter)
+        .send({ from: from });
+      console.log(result);
+      get_cards_on_sale();
+    } catch (error) {
+      console.error("Function error: ", error);
+    }
+  }
+
+  /******************************************************************************************************/
+  /**
+   * Get all the cards on sale
+   */
+  async function get_cards_on_sale() {
+    console.log("get_cards_on_sale");
+    const provider = new ethers.BrowserProvider(window.ethereum);
+    const contract = new ethers.Contract(
+      contractAddress,
+      CardToken.abi,
+      provider
+    );
+    try {
+      if (window.ethereum) {
+        await window.ethereum.request({ method: "eth_requestAccounts" });
+        const cards = await contract.getCardsOnSale();
+        const cardArray = cards.map((item) => {
+          return {
+            name: item.name,
+            id: parseInt(item.id),
+            cardNum: parseInt(item.id),
+            amount: parseInt(item.amount),
+            url: item.url,
+          };
+        });
+        setCardOnSale(cardArray);
+        console.log("cardsOnSale: ", cardArray);
+      }
+    } catch (error) {
+      console.error("Function error: ", error);
+    }
+  }
+
+  /******************************************************************************************************/
+  /**
+   * Accepts the card exchange
+   *
+   * @param {*} _id     COUNTER of the card
+   * @param {*} _amount Price to sell
+   */
+  async function accept_card_on_sale(_id, _amount) {
+    const web3 = new Web3(window.ethereum);
+    const contract = new web3.eth.Contract(CardToken.abi, contractAddress);
+    const acc = await web3.eth.getAccounts();
+    const from = acc[0];
+    try {
+      const result = await contract.methods
+        .acceptSale(_id, from)
+        .send({ from: from, value: ethers.parseEther(_amount) });
+      console.log(result);
+      get_cards_on_sale();
+      setState(!state);
+    } catch (error) {
+      console.error("Function error: ", error);
+    }
+  }
+
+  /******************************************************************************************************/
   return (
     <Router>
       <header>
@@ -188,13 +258,17 @@ function App() {
         <Route
           exact
           path="/*"
-          element={<Account account={account} ownerCards={ownerCards} />}
+          element={
+            <Account
+              account={account}
+              ownerCards={ownerCards}
+              cardOnSale={cardOnSale}
+              put_card_on_sale={put_card_on_sale}
+              get_cards_on_sale={get_cards_on_sale}
+              remove_card_on_sale={remove_card_on_sale}
+            />
+          }
         ></Route>
-        {/* <Route
-          path="/Account"
-          exact={true}
-          element={<Account account={account} ownerCards={ownerCards} />}
-        /> */}
         <Route
           path="/Boosters"
           exact={true}
@@ -210,7 +284,14 @@ function App() {
         <Route
           path="/Store"
           exact={true}
-          element={<Store mintCardNFT={mintCardNFT} allCards={allCards} />}
+          element={
+            <Store
+              mintCardNFT={mintCardNFT}
+              allCards={allCards}
+              cardOnSale={cardOnSale}
+              accept_card_on_sale={accept_card_on_sale}
+            />
+          }
         />
         <Route
           path="/Install"

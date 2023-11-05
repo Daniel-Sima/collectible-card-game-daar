@@ -1,7 +1,6 @@
 import pokemon from "pokemontcgsdk";
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import PokemonCards from "../PokemonCards";
 import PokemonCard from "../PokemonCard";
 
 const Boosters = ({ openBooster, ownerCards, opened, setOpened }) => {
@@ -90,7 +89,7 @@ const Boosters = ({ openBooster, ownerCards, opened, setOpened }) => {
                   <img
                     src={diamonPearl && diamonPearl.data[0].images.logo}
                     onClick={() =>
-                      openBooster(diamonPearl.data[0].id, 11n, "25")
+                      openBooster(diamonPearl.data[0].id, 131n, "25")
                     }
                     className="logo--collection"
                     alt="Logo of the collection Diamond & Pearl"

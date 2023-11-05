@@ -5,7 +5,16 @@ import { useLocation } from "react-router-dom";
 
 pokemon.configure({ apiKey: "f4be0dd2-ff36-42c2-9a1e-c50c11a36b4d" });
 
-const PokemonCards = ({ mintCardNFT, pokemonCards, allCards }) => {
+const PokemonCards = ({
+  mintCardNFT,
+  pokemonCards,
+  allCards,
+  put_card_on_sale,
+  get_cards_on_sale,
+  cardOnSale,
+  remove_card_on_sale,
+  accept_card_on_sale,
+}) => {
   let buyable = true;
   const location = useLocation();
 
@@ -29,8 +38,33 @@ const PokemonCards = ({ mintCardNFT, pokemonCards, allCards }) => {
                   {
                     <PokemonCard
                       card={item}
-                      mintCardNFT={mintCardNFT}
+                      fromAPI={true}
                       buyable={buyable}
+                      cardOnSale={cardOnSale}
+                      mintCardNFT={mintCardNFT}
+                      put_card_on_sale={put_card_on_sale}
+                      get_cards_on_sale={get_cards_on_sale}
+                      remove_card_on_sale={remove_card_on_sale}
+                      accept_card_on_sale={accept_card_on_sale}
+                    />
+                  }
+                </div>
+              );
+            })}
+          {cardOnSale &&
+            cardOnSale.map((item) => {
+              return (
+                <div key={item.id}>
+                  {
+                    <PokemonCard
+                      card={item}
+                      fromAPI={false}
+                      cardOnSale={cardOnSale}
+                      mintCardNFT={mintCardNFT}
+                      put_card_on_sale={put_card_on_sale}
+                      get_cards_on_sale={get_cards_on_sale}
+                      remove_card_on_sale={remove_card_on_sale}
+                      accept_card_on_sale={accept_card_on_sale}
                     />
                   }
                 </div>

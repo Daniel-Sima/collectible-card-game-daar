@@ -4,7 +4,14 @@ import pokemon from "pokemontcgsdk";
 import PokemonCards from "../PokemonCards";
 import { useNavigate } from "react-router-dom";
 
-const Account = ({ account, ownerCards }) => {
+const Account = ({
+  account,
+  ownerCards,
+  put_card_on_sale,
+  get_cards_on_sale,
+  cardOnSale,
+  remove_card_on_sale,
+}) => {
   const [pokemonCards, setPokemonCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
@@ -43,7 +50,13 @@ const Account = ({ account, ownerCards }) => {
           </div>
           <div className="border-top"></div>
           <div className="cards">
-            <PokemonCards pokemonCards={pokemonCards} />
+            <PokemonCards
+              pokemonCards={pokemonCards}
+              cardOnSale={cardOnSale}
+              put_card_on_sale={put_card_on_sale}
+              get_cards_on_sale={get_cards_on_sale}
+              remove_card_on_sale={remove_card_on_sale}
+            />
           </div>
         </div>
       )}

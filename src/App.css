@@ -147,6 +147,18 @@ picture {
   margin-bottom: 2rem;
 }
 
+.form--sells {
+  margin-top: 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.btn-sells {
+  padding: 0.5rem 1rem;
+  background-color: #172b4b;
+}
+
 /**************************************************************************************************/
 /***************************************** STORE **************************************************/
 /**************************************************************************************************/
@@ -181,6 +193,11 @@ picture {
 .cardGrey {
   filter: grayscale(100%);
   transform: scale(1.1);
+}
+
+.cardBuyable {
+  filter: grayscale(100%);
+  cursor: pointer;
 }
 
 .loading {

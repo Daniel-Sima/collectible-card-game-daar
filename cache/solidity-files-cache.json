@@ -479,8 +479,8 @@
       ]
     },
     "/home/s-daniiel/Documents/collectible-card-game-daar/contracts/CardToken.sol": {
-      "lastModificationDate": 1699191358366,
-      "contentHash": "0e4d503ff90f542f86c78b4731582a38",
+      "lastModificationDate": 1699221555502,
+      "contentHash": "d7ba3fdd4d794c87ca82dbbcf23d637c",
       "sourceName": "contracts/CardToken.sol",
       "solcConfig": {
         "version": "0.8.19",

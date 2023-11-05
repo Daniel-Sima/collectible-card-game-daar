@@ -3,8 +3,8 @@ import { useState, useEffect } from "react";
 import pokemon from "pokemontcgsdk";
 import { useNavigate } from "react-router-dom";
 
-const Store = ({ mintCardNFT, allCards }) => {
-  const [pokemonCards, setPokemonCards] = useState(null);
+const Store = ({ mintCardNFT, allCards, cardOnSale, accept_card_on_sale }) => {
+  const [pokemonCards, setPokemonCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
@@ -30,13 +30,15 @@ const Store = ({ mintCardNFT, allCards }) => {
           <div className="start-text">Choose your cards for 1 ETH !</div>
           <div className="border-top"></div>
           <div className="cards">
-            {pokemonCards && allCards && (
+            {
               <PokemonCards
                 pokemonCards={pokemonCards}
                 allCards={allCards}
+                cardOnSale={cardOnSale}
                 mintCardNFT={mintCardNFT}
+                accept_card_on_sale={accept_card_on_sale}
               />
-            )}
+            }
           </div>
         </div>
       )}
