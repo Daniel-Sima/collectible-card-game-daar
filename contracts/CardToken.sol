@@ -99,7 +99,7 @@ contract CardToken is ERC721, Ownable {
         
         require(msg.value >= feeToPay, "The amount is not correct!");
 
-        for (uint256 i=0; i<4; i++) {
+        for (uint256 i=0; i<3; i++) {
             uint256 randomNum = _createRandomNum(_size-i);
             string memory randomNumString = Strings.toString(randomNum);
             string memory concat = string.concat(_collection, "-");

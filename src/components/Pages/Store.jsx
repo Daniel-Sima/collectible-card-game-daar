@@ -1,16 +1,22 @@
 import PokemonCards from "../PokemonCards";
 import { useState, useEffect } from "react";
 import pokemon from "pokemontcgsdk";
+import { useNavigate } from "react-router-dom";
 
 const Store = ({ mintCardNFT, allCards }) => {
   const [pokemonCards, setPokemonCards] = useState(null);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
-    pokemon.card.all({ q: "set.id:base1" }).then((pokeCard) => {
-      setPokemonCards(pokeCard);
-      setLoading(false);
-    });
+    if (window.ethereum) {
+      pokemon.card.all({ q: "set.id:base1" }).then((pokeCard) => {
+        setPokemonCards(pokeCard);
+        setLoading(false);
+      });
+    } else {
+      navigate("/Install");
+    }
   }, []);
 
   return (

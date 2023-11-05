@@ -2,10 +2,12 @@ import { useEffect, useState } from "react";
 import "./../../App.css";
 import pokemon from "pokemontcgsdk";
 import PokemonCards from "../PokemonCards";
+import { useNavigate } from "react-router-dom";
 
 const Account = ({ account, ownerCards }) => {
   const [pokemonCards, setPokemonCards] = useState([]);
   const [loading, setLoading] = useState(true);
+  const navigate = useNavigate();
 
   useEffect(() => {
     if (ownerCards) {
@@ -20,6 +22,8 @@ const Account = ({ account, ownerCards }) => {
       };
 
       fetchPokemonCards();
+    } else {
+      navigate("/Install");
     }
   }, [ownerCards]);
 

@@ -195,11 +195,6 @@ picture {
 /**************************************************************************************************/
 /***************************************** BOOSTERS ***********************************************/
 /**************************************************************************************************/
-
-.boosters {
-  position: relative;
-}
-
 .logo--collection {
   width: 40rem;
   padding: 5rem;
@@ -211,6 +206,7 @@ picture {
 }
 
 .collections {
+  position: relative;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
 }
@@ -225,10 +221,12 @@ picture {
 
 .pokemon-cards-container {
   position: absolute;
-  top: 60%;
+  top: 45%;
   left: 50%;
   transform: translate(-50%, -50%);
   padding: 1rem;
+  display: flex;
+  flex-direction: column;
 }
 
 .animated {
@@ -246,20 +244,27 @@ picture {
   }
 }
 
-/* A CHANGER */
+.grid--3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 5rem;
+}
 .btn--OK {
-  position: absolute;
-  /* top: 60%; */
-  /* left: 50%; */
-  /* transform: translate(-100%, 100%); */
   padding: 1rem 2rem;
-  margin-top: -30rem;
-  margin-left: 55rem;
+  background-color: #011627;
+  border-color: #99a2a9;
 }
 
 .btn--OK:hover,
 .btn--OK:active {
   cursor: pointer;
+  background-color: #172b4b;
+}
+
+.container--btn {
+  display: flex;
+  justify-content: center;
+  margin-top: 2rem;
 }
 
 /* .logo {

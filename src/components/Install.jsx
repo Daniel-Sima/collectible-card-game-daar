@@ -1,6 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { Navigate, useNavigate } from "react-router-dom";
 
-const Install = () => {
+const Install = ({ ownerCards }) => {
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (ownerCards) {
+      navigate("/Account");
+    }
+  }, [ownerCards]);
+
   return (
     <div className="install">
       <h3>Follow the link to install 👇🏼</h3>

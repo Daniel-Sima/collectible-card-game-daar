@@ -26,25 +26,26 @@ function App() {
   const [opened, setOpened] = useState(false);
 
   const web3 = new Web3(window.ethereum);
-  const contractAddress = "0x9A676e781A523b5d0C0e43731313A708CB607508";
+  const contractAddress = "0xB7f8BC63BbcaD18155201308C8f3540b07f84F5e";
 
   useEffect(() => {
-    console.log("PONG");
-    // getAccount();
     getOwnerCards();
 
-    // getAllCards();
+    if (window.ethereum) {
+      const handleAccountsChanged = (accounts) => {
+        setAccount(accounts[0]);
+        setState(!state);
+      };
 
-    const handleAccountsChanged = (accounts) => {
-      setAccount(accounts[0]);
-      setState(!state);
-    };
+      window.ethereum.on("accountsChanged", handleAccountsChanged);
 
-    window.ethereum.on("accountsChanged", handleAccountsChanged);
-
-    return () => {
-      window.ethereum.removeListener("accountsChanged", handleAccountsChanged);
-    };
+      return () => {
+        window.ethereum.removeListener(
+          "accountsChanged",
+          handleAccountsChanged
+        );
+      };
+    }
   }, [state]);
 
   // const getAccount = async () => {
@@ -162,7 +163,7 @@ function App() {
     try {
       const result = await contract.methods
         .openBooster(_collection, _size)
-        .send({ from: from, value: ethers.parseEther("5") });
+        .send({ from: from, value: ethers.parseEther(_eths) });
       console.log(result);
       setState(!state);
       setOpened(true);
@@ -187,13 +188,7 @@ function App() {
         <Route
           exact
           path="/*"
-          element={
-            window.ethereum ? (
-              <Account account={account} ownerCards={ownerCards} />
-            ) : (
-              <Install />
-            )
-          }
+          element={<Account account={account} ownerCards={ownerCards} />}
         ></Route>
         {/* <Route
           path="/Account"
@@ -217,7 +212,11 @@ function App() {
           exact={true}
           element={<Store mintCardNFT={mintCardNFT} allCards={allCards} />}
         />
-        <Route path="/Install" exact={true} element={<Install />} />
+        <Route
+          path="/Install"
+          exact={true}
+          element={<Install ownerCards={ownerCards} />}
+        />
       </Routes>
     </Router>
   );
