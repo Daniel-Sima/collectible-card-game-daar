@@ -27,3 +27,10 @@ Copies the result `Private Key` from the `terminal 2` and paste it in `contractA
 npm install
 npm start
 ```
+---
+---
+## Demo
+
+https://github.com/Daniel-Sima/collectible-card-game-daar/assets/56051898/a7150dbc-7b3a-4681-b308-2a39219987f2
+
+
