@@ -26,7 +26,7 @@ function App() {
   const [opened, setOpened] = useState(false);
 
   const web3 = new Web3(window.ethereum);
-  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
+  const contractAddress = "0x3Aa5ebB10DC797CAC828524e59A333d0A371443c";
 
   /******************************************************************************************************/
   useEffect(() => {
