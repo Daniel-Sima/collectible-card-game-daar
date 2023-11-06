@@ -3,11 +3,15 @@ import { useState, useEffect } from "react";
 import pokemon from "pokemontcgsdk";
 import { useNavigate } from "react-router-dom";
 
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
 const Store = ({ mintCardNFT, allCards, cardOnSale, accept_card_on_sale }) => {
   const [pokemonCards, setPokemonCards] = useState([]);
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  /******************************************************************************************************/
   useEffect(() => {
     if (window.ethereum) {
       pokemon.card.all({ q: "set.id:base1" }).then((pokeCard) => {
@@ -19,6 +23,7 @@ const Store = ({ mintCardNFT, allCards, cardOnSale, accept_card_on_sale }) => {
     }
   }, []);
 
+  /******************************************************************************************************/
   return (
     <>
       {loading ? (
@@ -27,7 +32,7 @@ const Store = ({ mintCardNFT, allCards, cardOnSale, accept_card_on_sale }) => {
         </div>
       ) : (
         <div className="store">
-          <div className="start-text">Choose your cards for 1 ETH !</div>
+          <div className="start-text">Buy your cards !</div>
           <div className="border-top"></div>
           <div className="cards">
             {
@@ -47,3 +52,6 @@ const Store = ({ mintCardNFT, allCards, cardOnSale, accept_card_on_sale }) => {
 };
 
 export default Store;
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/

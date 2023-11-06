@@ -3,6 +3,9 @@ import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import PokemonCard from "../PokemonCard";
 
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/
 const Boosters = ({ openBooster, ownerCards, opened, setOpened }) => {
   const [teamRocket, setTeamRocket] = useState();
   const [diamonPearl, setDiamonPearl] = useState();
@@ -12,6 +15,11 @@ const Boosters = ({ openBooster, ownerCards, opened, setOpened }) => {
   const [pokemonCards, setPokemonCards] = useState([]);
   const navigate = useNavigate();
 
+  /******************************************************************************************************/
+  /**
+   * Get the last 3 cards in owner's collection
+   * (Needed after a booster)
+   */
   const fetchPokemonCards = async () => {
     const cartesRes = [];
     for (const item of ownerCards.slice(-3)) {
@@ -21,6 +29,7 @@ const Boosters = ({ openBooster, ownerCards, opened, setOpened }) => {
     setPokemonCards(cartesRes);
   };
 
+  /******************************************************************************************************/
   useEffect(() => {
     if (ownerCards) {
       if (opened) {
@@ -54,6 +63,7 @@ const Boosters = ({ openBooster, ownerCards, opened, setOpened }) => {
     }
   }, [ownerCards]);
 
+  /******************************************************************************************************/
   return (
     <>
       {loading ? (
@@ -142,3 +152,6 @@ const Boosters = ({ openBooster, ownerCards, opened, setOpened }) => {
 };
 
 export default Boosters;
+/******************************************************************************************************/
+/******************************************************************************************************/
+/******************************************************************************************************/

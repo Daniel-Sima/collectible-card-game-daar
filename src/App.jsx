@@ -2,7 +2,7 @@ import React from "react";
 import Web3 from "web3";
 import "./App.css";
 import Install from "./components/Install";
-import { Route, Routes, BrowserRouter as Router, Link } from "react-router-dom"; // Assurez-vous d'importer BrowserRouter as Router
+import { Route, Routes, BrowserRouter as Router, Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import CardToken from "./contracts/contracts/CardToken.sol/CardToken.json";
 import { ethers } from "ethers";
@@ -18,17 +18,17 @@ import logo_TCG from "./assets/pokemon_TCG.png";
 /******************************************************************************************************/
 function App() {
   const [showNav, setShowNav] = useState(false);
-  const [account, setAccount] = useState(null); // Vous devez gérer l'état du compte
+  const [account, setAccount] = useState(null);
   const [ownerCards, setOwnerCards] = useState();
   const [cardOnSale, setCardOnSale] = useState([]);
-
   const [allCards, setAllCards] = useState(null);
   const [state, setState] = useState(false);
   const [opened, setOpened] = useState(false);
 
   const web3 = new Web3(window.ethereum);
-  const contractAddress = "0x9E545E3C0baAB3E08CdfD552C960A1050f373042";
+  const contractAddress = "0x5FbDB2315678afecb367f032d93F642f64180aa3";
 
+  /******************************************************************************************************/
   useEffect(() => {
     getOwnerCards();
     get_cards_on_sale();
@@ -50,14 +50,12 @@ function App() {
     }
   }, [state]);
 
+  /******************************************************************************************************/
   /**
    * Returns owner's cards from the blockchain.
    */
   const getOwnerCards = async () => {
     const provider = new ethers.BrowserProvider(window.ethereum);
-    // get the end user
-    // const signer = provider.getSigner();
-    // get the smart contract
     const contract = new ethers.Contract(
       contractAddress,
       CardToken.abi,
@@ -97,6 +95,13 @@ function App() {
     }
   };
 
+  /******************************************************************************************************/
+  /**
+   * Mint a card not already minted
+   *
+   * @param {*} _cardName Name of the Card (id in API)
+   * @param {*} _cardNum  Number of the Card in its set
+   */
   async function mintCardNFT(_cardName, _cardNum) {
     const web3 = new Web3(window.ethereum);
     const acc = await web3.eth.getAccounts();

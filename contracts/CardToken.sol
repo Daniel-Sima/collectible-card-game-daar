@@ -9,20 +9,22 @@ import "./../node_modules/@openzeppelin/contracts/utils/Strings.sol";
 /******************************************************************************************************/
 /******************************************************************************************************/
 contract CardToken is ERC721, Ownable {
-
+    /** ID of the cards */
     uint256 COUNTER;
 
     /** Counter of the cards on sale */
     uint256 COUNTER_ON_SALE;
  
+    /** Fee to buy a card from the "Base" collection */
     uint256 fee = 1 ether;
 
+    /** Card structure */
     struct Card {
-        string name;
-        uint256 id; // COUNTER
-        uint256 cardNum; 
-        uint256 amount; // if != 0 => on sale !
-        string url;
+        string name;        // Names of the Card (id in Pokemon API)
+        uint256 id;         // COUNTER
+        uint256 cardNum;    // Number of the card in its set
+        uint256 amount;     // Price of the card (if != 0 => on sale)
+        string url;         // Url of the image (only for the Cards from the boosters collections)
     }
 
     /** All cards minted in the game */
@@ -34,11 +36,20 @@ contract CardToken is ERC721, Ownable {
     /** Event of the puchase of a card between users */
     event CardPurchased(address indexed buyer, address indexed seller, uint256 cardIndex, uint256 amount);
 
+    /******************************************************************************************************/
+    /** Constructor */
     constructor()
         ERC721("CardToken", "CTK")
         // Ownable(initialOwner)
     {}
 
+    /******************************************************************************************************/
+    /**
+     * Private fonction allowing to mint a Card
+     * 
+     * @param _name     Name of the card
+     * @param _cardNum  Numer of the card in its set
+     */
     function _mintCardToken(string memory _name, uint256 _cardNum) internal {
         Card memory newCard = Card(_name, COUNTER, _cardNum, 0, "");
         cards.push(newCard);
@@ -47,6 +58,13 @@ contract CardToken is ERC721, Ownable {
         COUNTER++;
     }
 
+    /******************************************************************************************************/
+    /**
+     * Public method to mint a Card, called by the front-end with send()
+     * 
+     * @param _name     Name of the card
+     * @param _cardNum  Numer of the card in its set
+     */
     function mintCard(string memory _name, uint256 _cardNum) public payable  {
         require(msg.value >= fee, "The amount is not correct!");
         _mintCardToken(_name, _cardNum);
@@ -60,25 +78,44 @@ contract CardToken is ERC721, Ownable {
         return cards;
     }
 
+    /******************************************************************************************************/
+    /**
+     * Generate a random number between 0 and "_mod" using time block and user address
+     * 
+     * @param _mod  Modulo
+     */
     function _createRandomNum(uint256 _mod) internal view returns (uint256) {
         uint256 randomNum = uint256(keccak256(abi.encodePacked(block.timestamp, msg.sender)));
         return randomNum % _mod;
     }
 
-    // function mintRandomCard(uint256 _collectionCardCount) public {
-    //     uint256 cardNum = _createRandomNum(_collectionCardCount);
-    //     _mintCardToken("to_change", cardNum); 
-    // }
-
+    /******************************************************************************************************/
+    /**
+     * Allows the owner to update the fee to buy a card 
+     * (Not used)
+     * 
+     * @param _fee Price in ETH
+     */
     function updateFee(uint256 _fee) external onlyOwner() {
         fee = _fee;
     }
 
+    /******************************************************************************************************/
+    /**
+     * Allows the owner to witdraw ETH from the Smart Contract
+     * (Not used)
+     */
     function withdraw() external payable onlyOwner() {
         address payable _owner = payable(owner());
         _owner.transfer(address(this).balance);
     }
 
+    /******************************************************************************************************/
+    /**
+     * Getter of the owner's Cards
+     *  
+     * @param _owner    Owner's address
+     */
     function getOwnerCards(address _owner) public view returns (Card[] memory) {
         Card[] memory res = new Card[](balanceOf(_owner));
         uint256 cpt = 0;
@@ -95,8 +132,8 @@ contract CardToken is ERC721, Ownable {
     /**
      * Allows the user to open a booster and win 5 cards randomly 
      * 
-     * @param _collection   name of the collection
-     * @param _size         size of the collection
+     * @param _collection   Name of the collection
+     * @param _size         Size of the collection
      */
     function openBooster(string memory _collection, uint256 _size) public payable {
         Card[] memory res = new Card[](4);
@@ -147,6 +184,7 @@ contract CardToken is ERC721, Ownable {
     /******************************************************************************************************/
     /**
      * Allows owner to put his card to sell in the Store.
+     * (A ameliorer en ajoutant directement le COUNTER en parametres)
      * 
      * @param _id       Name (id) of de card
      * @param _amount   Price to sell the card
